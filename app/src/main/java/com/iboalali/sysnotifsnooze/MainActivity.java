@@ -65,25 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
             sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
 
-            String base64EncodedPublicKey = CONTEXT.getString(R.string.public_license_key);
-
-            mHelper = new IabHelper(CONTEXT, base64EncodedPublicKey);
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    if (!result.isSuccess()) {
-                        Log.d(TAG, "Problem setting up In-app Billing: " + result);
-                        return;
-                    }
-                    // Hooray, IAB is fully set up!
-                    ArrayList<String> skus = new ArrayList<String>();
-                    skus.add(MainActivity.SKU_SMALL_TIP_2);
-                    skus.add(MainActivity.SKU_LARGE_TIP_5);
-
-                    mHelper.queryInventoryAsync(true, skus, queryInventoryFinishedListener);
-
-                }
-            });
-
             notification_permission = findPreference(KEY_NOTIFICATION_PERMISSION);
             settings_hide_icon = (SwitchPreference)findPreference(KEY_SETTINGS_HIDE_ICON);
             small_tip = findPreference(KEY_SMALL_TIP);

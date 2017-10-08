@@ -38,7 +38,7 @@ public class NotificationListener extends NotificationListenerService {
         if (sbn == null)
             return;
 
-        if (sbn.getPackageName().equals("android")) {
+        // if (sbn.getPackageName().equals("android")) {
             Log.d(TAG, sbn.getPackageName() + ": " + sbn.getNotification().extras.getString(getString(R.string.notification_intent_key), ""));
 
             String key = sbn.getNotification().extras.getString(getString(R.string.notification_intent_key));
@@ -47,15 +47,14 @@ public class NotificationListener extends NotificationListenerService {
             String nc = getString(R.string.notification_content_singular);
             String ncp = getString(R.string.notification_content_plural);
 
-            if (key.contains(nc) || key.contains(ncp)) {
+            if (key.contains(nc) || key.contains(ncp) || key.contains("HelloTalk is running") || key.contains("Tap for more information")) {
                 NotificationListener.this.snoozeNotification(sbn.getKey(), 10000000000000L);
                 Log.d(TAG, sbn.getPackageName() + ": " + key + ", snoozed");
 
             }
             //Long.MAX_VALUE = 9223372036854775807 = 292.5 million years -> not working
             //10000000000000 = 317.09792 years -> working
-
-        }
+        // }
     }
 
     class NotificationListenerBroadcastReceiver extends BroadcastReceiver{
@@ -68,7 +67,7 @@ public class NotificationListener extends NotificationListenerService {
             if(intent.getStringExtra("command").equals("hide")){
                 for(StatusBarNotification sbn: NotificationListener.this.getActiveNotifications()){
 
-                    if (sbn.getPackageName().equals("android")) {
+                    // if (sbn.getPackageName().equals("android")) {
                         Log.d(TAG, "List: " + sbn.getPackageName() + ": " + sbn.getNotification().extras.getString(getString(R.string.notification_intent_key), ""));
 
                         String key = sbn.getNotification().extras.getString(getString(R.string.notification_intent_key));
@@ -77,12 +76,12 @@ public class NotificationListener extends NotificationListenerService {
                         String nc = getString(R.string.notification_content_singular);
                         String ncp = getString(R.string.notification_content_plural);
 
-                        if (key.contains(nc) || key.contains(ncp)) {
+                        if (key.contains(nc) || key.contains(ncp) || key.contains("HelloTalk is running") || key.contains("Tap for more information")) {
                             NotificationListener.this.snoozeNotification(sbn.getKey(), 10000000000000L);
                             Log.d(TAG, sbn.getPackageName() + ": " + key + ", snoozed");
 
                         }
-                    }
+                    // }
                 }
             }
         }
